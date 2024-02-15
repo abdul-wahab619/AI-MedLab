@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 
 const ServiceCard = ({ item, index }) => {
-  console.log(item);
   const { name, desc, bgColor, textColor } = item;
-  console.log(name);
   return (
     <div className="py-[30px] px-3 lg:px-5">
       <h2 className="text-[26px] leading-9 text-headingColor font-[700]">
