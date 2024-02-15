@@ -7,6 +7,32 @@
 body {
   font-family: "Manrope", sans-serif;
 }
+.swiper-pagination-bullet {
+  width: 12px !important;
+  height: 12px !important;
+  border: 1px solid #101a1e !important;
+  opacity: 100% !important;
+  background: #fff !important;
+}
+.swiper-pagination-bullet-active {
+  background: #0067ff !important;
+  border: none !important;
+}
+.swiper {
+  padding-bottom: 70px !important;
+}
+.swiper-slide.swiper-slide-next {
+  background: #0067ff;
+  border-radius: 12px;
+  box-shadow: 0px 20px 70px rgba(0, 103, 155, 0.3) !important;
+}
+.swiper-slide.swiper-slide-next h4,
+.swiper-slide.swiper-slide-next p {
+  color: #fff;
+}
+.swiper-pagination {
+  top: 90% !important;
+}
 .sticky__header {
   width: 100%;
   height: 80px;
