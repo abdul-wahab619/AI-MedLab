@@ -1,4 +1,8 @@
+//frontend
 npm create vite@latest
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 npm i react-router-dom react-icons react-spinners react-toastify swiper
+
+//backend
+npm i express mongodb mongoose cors jsonwebtoken cookie-parser dotenv bcryptjs
