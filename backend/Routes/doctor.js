@@ -6,8 +6,12 @@ import {
   getSingleDoctor,
 } from "../Controllers/doctorController.js";
 import { authenticate, restrict } from "../auth/verifyToken.js";
+import reviewRouter from "./review.js";
 
 const router = express.Router();
+
+//nested route
+router.use("/:doctorId/reviews", reviewRouter);
 
 router.get("/:id", getSingleDoctor); // Fetch a single Doctor
 router.get("/", getAllDoctors); // Fetch all Doctors
