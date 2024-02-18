@@ -101,9 +101,11 @@ export const getAllDoctors = async (req, res) => {
 
 export const getDoctorProfile = async (req, res) => {
   const doctorId = req.doctorId;
+  // console.log("Doctor ID:", doctorId);
 
   try {
     const doctor = await Doctor.findById(doctorId);
+    // console.log("Retrieved doctor profile:", doctor);
 
     if (!doctor) {
       return res
@@ -120,9 +122,11 @@ export const getDoctorProfile = async (req, res) => {
       data: { ...rest, appointments },
     });
   } catch (error) {
+    // console.error("Error fetching doctor profile:", error);
     res.status(500).json({
       success: false,
       message: "Someting went wrong, cannot get this",
+      error: error.message,
     });
   }
 };

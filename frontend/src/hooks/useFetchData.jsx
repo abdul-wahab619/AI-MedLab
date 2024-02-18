@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { token } from "../config.js";
-import { toast } from "react-toastify";
 
 const useFetchData = (url) => {
   const [data, setData] = useState([]);
