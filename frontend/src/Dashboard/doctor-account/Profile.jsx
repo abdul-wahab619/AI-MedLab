@@ -440,7 +440,7 @@ const Profile = ({ doctorData }) => {
                     <input
                       type="time"
                       name="startingTime"
-                      value={item.staringTime}
+                      value={item.startingTime}
                       className="form__input"
                       onChange={(e) => handleTimeSlotChange(e, index)}
                     />
