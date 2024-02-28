@@ -12,6 +12,8 @@ import MyAccount from "../Dashboard/user-account/MyAccount";
 import Dashboard from "../Dashboard/doctor-account/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
 import CheckoutSuccess from "../pages/CheckoutSuccess";
+import { services } from "../assets/data/services.js"; // Import the services array
+import DiseasePage from "../components/Services/Disease/DiseasePage.jsx"; // Import DiseasePage component
 
 const Routers = () => {
   return (
@@ -41,6 +43,14 @@ const Routers = () => {
           </ProtectedRoute>
         }
       />
+      {/* Dynamically create routes for each disease */}
+      {services.map((service) => (
+        <Route
+          key={service.id}
+          path={`/disease/${service.id}`}
+          element={<DiseasePage service={service} />} // Pass the service data to the DiseasePage component
+        />
+      ))}
     </Routes>
   );
 };

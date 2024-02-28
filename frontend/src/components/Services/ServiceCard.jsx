@@ -1,9 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 
-const ServiceCard = ({ item, index }) => {
-  const { name, desc, bgColor, textColor } = item;
+const ServiceCard = ({ item }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (id) => {
+    // Navigate to the corresponding disease page based on the id
+    navigate(`/disease/${id}`);
+  };
+
+  const { id, name, desc, bgColor, textColor } = item;
+
   return (
     <div className="py-[30px] px-3 lg:px-5">
       <h2 className="text-[26px] leading-9 text-headingColor font-[700]">
@@ -14,12 +22,12 @@ const ServiceCard = ({ item, index }) => {
       </p>
 
       <div className="flex items-center justify-between mt-[30px]">
-        <Link
-          to="/doctors"
-          className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] flex items-center justify-center group hover:bg-primaryColor hover:border-none"
+        <div
+          onClick={() => handleClick(id)}
+          className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] flex items-center justify-center group hover:bg-primaryColor hover:border-none cursor-pointer"
         >
           <BsArrowRight className="group-hover:text-white w-6 h-5" />
-        </Link>
+        </div>
 
         <span
           className="w-[44px] h-[44px] flex items-center justify-center text-[18px] leading-[30px] font-[600] 
@@ -30,7 +38,7 @@ const ServiceCard = ({ item, index }) => {
             borderRadius: "6px 0 0 6px",
           }}
         >
-          {index + 1}
+          {id}
         </span>
       </div>
     </div>
