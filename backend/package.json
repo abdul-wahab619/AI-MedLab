@@ -5,6 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "install-python-dependencies": "pip install -r requirements.txt",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "start-dev": "nodemon index.js"
@@ -13,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.4",
@@ -20,6 +22,9 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.2",
+    "pickle": "^0.2.0",
+    "python-shell": "^5.0.0",
+    "scikit-learn": "^0.1.0",
     "stripe": "^14.17.0"
   }
 }
