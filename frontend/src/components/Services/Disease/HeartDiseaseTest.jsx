@@ -1,12 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "../../../config";
 
 const HeartDiseaseTest = () => {
-  const handleSubmit = (event) => {
-    // Handle form submission here
-    event.preventDefault();
-    // Example: You can fetch data from form fields and perform actions like submitting to a backend endpoint
+  const [inputData, setInputData] = useState({
+    Age: "",
+    "Sex (Male:1, Female:0)": "",
+    "Chest Pain Type": "",
+    "Resting Blood Pressure (mm Hg)": "",
+    "Serum Cholestoral (mg/dl)": "",
+    "Fasting Blood Sugar (1 = true; 0 = false)": "",
+    "Resting Electrocardiographic Results": "",
+    "Age (years) eg. 34": "",
+    "Exercise Induced Angina (1 = yes; 0 = no)": "",
+    "ST Depression Induced by Exercise Relative to Rest": "",
+    "Slope of the Peak Exercise ST Segment": "",
+    "Number of Major Vessels (0-3) Colored by Flourosopy": "",
+    "3 = Normal; 6 = Fixed Defect; 7 = Reversable Defect": "",
+  });
+  const [prediction, setPrediction] = useState(null);
+  const [formError, setFormError] = useState("");
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputData({ ...inputData, [name]: value });
+    setFormError("");
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Check if any field is empty
+    const isFormFilled = Object.values(inputData).every(
+      (value) => value.trim() !== ""
+    );
+    if (!isFormFilled) {
+      setFormError("Please fill out all fields.");
+      return;
+    }
+    try {
+      const response = await axios.post(`${BASE_URL}/heart`, {
+        data: inputData,
+      });
+      setPrediction(response.data.prediction);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   return (
     <div className="m-5 row mb-32">
       <div className="col-md-2"></div>
@@ -17,126 +56,44 @@ const HeartDiseaseTest = () => {
         <div className="card border border-black rounded-lg p-8">
           <form className="form-horizontal" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="col-span-1">
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="age"
-                  placeholder="Age"
-                />
-              </div>
-              <div className="col-span-1">
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="sex"
-                  placeholder="Sex (Male:1, Female:0)"
-                />
-              </div>
-              <div className="col-span-1">
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="cp"
-                  placeholder="Chest Pain Type"
-                />
-              </div>
+              {Object.entries(inputData).map(([name, value]) => (
+                <div key={name} className="col-span-1">
+                  <input
+                    className="border border-black p-2 w-full"
+                    type="text"
+                    name={name}
+                    placeholder={`${name}`}
+                    value={value}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              ))}
+              {/* Form error message */}
+              {formError && (
+                <div className="text-red-500 mb-4">{formError}</div>
+              )}
+              {/* Submit button */}
+              <input
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                value="Predict"
+              />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-              <div className="col-span-1">
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="trestbps"
-                  placeholder="Resting Blood Pressure (mm Hg)"
-                />
-              </div>
-              <div className="col-span-1">
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="chol"
-                  placeholder="Serum Cholestoral (mg/dl)"
-                />
-              </div>
-              <div className="col-span-1">
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="fbs"
-                  placeholder="Fasting Blood Sugar (1 = true; 0 = false)"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-              <div className="col-span-1">
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="restecg"
-                  placeholder="Resting Electrocardiographic Results"
-                />
-              </div>
-              <div className="col-span-1">
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="thalach"
-                  placeholder="Maximum Heart Rate Achieved"
-                />
-              </div>
-              <div className="col-span-1">
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="exang"
-                  placeholder="Exercise Induced Angina (1 = yes; 0 = no)"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-              <div className="col-span-1">
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="oldpeak"
-                  placeholder="ST Depression Induced by Exercise Relative to Rest"
-                />
-              </div>
-              <div className="col-span-1">
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="slope"
-                  placeholder="Slope of the Peak Exercise ST Segment"
-                />
-              </div>
-              <div className="col-span-1">
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="ca"
-                  placeholder="Number of Major Vessels (0-3) Colored by Flourosopy"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-              <div className="col-span-1"></div>
-              <div className="col-span-1">
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="thal"
-                  placeholder="3 = Normal; 6 = Fixed Defect; 7 = Reversable Defect"
-                />
-              </div>
-            </div>
-            <input
-              type="submit"
-              className="btn btn-info btn-block w-full text-[20px] mt-8 hover:cursor-pointer"
-              value="Predict"
-            />
           </form>
+          {/* Prediction result */}
+          {prediction !== null && (
+            <div
+              className={`mt-3 ${
+                prediction.includes("[1]") ? "bg-red-400" : "bg-green-400"
+              } text-2xl`}
+            >
+              <h3 className="text-center">
+                {prediction.includes("[1]")
+                  ? "Sorry! Please consult your doctor."
+                  : "Great! You are HEALTHY."}
+              </h3>
+            </div>
+          )}
         </div>
       </div>
     </div>

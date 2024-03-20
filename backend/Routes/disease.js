@@ -2,8 +2,11 @@ import express from "express";
 import { spawn } from "child_process";
 const router = express.Router();
 
-const modelPath = "D:\\AI-MedLab\\backend\\aimodels\\diabetes.pkl";
+const diabetesModel = "D:\\AI-MedLab\\backend\\aimodels\\diabetes.pkl";
+const heartModel = "D:\\AI-MedLab\\backend\\aimodels\\heart.pkl";
+
 const pythonScriptPath = "D:\\AI-MedLab\\backend\\predict.py";
+const pythonScriptPathForHeart = "D:\\AI-MedLab\\backend\\heart.py";
 
 router.post("/diabetes", (req, res) => {
   try {
@@ -11,19 +14,19 @@ router.post("/diabetes", (req, res) => {
     const pythonProcess = spawn("python", [
       pythonScriptPath,
       "--loads",
-      modelPath,
+      diabetesModel,
       JSON.stringify(data),
     ]);
     let prediction = "";
     let responseSent = false; // Flag to track if response has been sent
 
     pythonProcess.stdout.on("data", (data) => {
-      console.log("Python script output:", data.toString()); 
+      console.log("Python script output:", data.toString());
       prediction += data.toString();
     });
 
     pythonProcess.stderr.on("data", (data) => {
-      console.error("Python script error:", data.toString()); 
+      console.error("Python script error:", data.toString());
     });
 
     pythonProcess.on("close", (code) => {
@@ -36,8 +39,8 @@ router.post("/diabetes", (req, res) => {
     });
 
     pythonProcess.on("error", (error) => {
-      console.error("Python process error:", error); 
-      if (!responseSent) { 
+      console.error("Python process error:", error);
+      if (!responseSent) {
         res.status(500).send("Internal Server Error");
         responseSent = true;
       }
@@ -50,7 +53,51 @@ router.post("/diabetes", (req, res) => {
     }
   }
 });
+router.post("/heart", (req, res) => {
+  try {
+    const data = req.body.data;
+    const pythonProcess = spawn("python", [
+      pythonScriptPathForHeart,
+      "--loads",
+      heartModel,
+      JSON.stringify(data),
+    ]);
+    let prediction = "";
+    let responseSent = false; // Flag to track if response has been sent
 
+    pythonProcess.stdout.on("data", (data) => {
+      console.log("Python script output:", data.toString());
+      prediction += data.toString();
+    });
+
+    pythonProcess.stderr.on("data", (data) => {
+      console.error("Python script error:", data.toString());
+    });
+
+    pythonProcess.on("close", (code) => {
+      console.log("Python process closed with code:", code);
+      console.log("Prediction:", prediction);
+      if (!responseSent) {
+        res.json({ prediction });
+        responseSent = true;
+      }
+    });
+
+    pythonProcess.on("error", (error) => {
+      console.error("Python process error:", error);
+      if (!responseSent) {
+        res.status(500).send("Internal Server Error");
+        responseSent = true;
+      }
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    if (!responseSent) {
+      res.status(500).send("Internal Server Error");
+      responseSent = true;
+    }
+  }
+});
 
 // // Route for diabetes prediction
 // router.post("/diabetes", predictDiabetes);
