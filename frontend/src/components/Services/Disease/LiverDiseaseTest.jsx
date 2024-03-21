@@ -1,12 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "../../../config";
 
 const LiverDiseaseTest = () => {
-  const handleSubmit = (event) => {
-    // Handle form submission here
-    event.preventDefault();
-    // Example: You can fetch data from form fields and perform actions like submitting to a backend endpoint
+  const [inputData, setInputData] = useState({
+    Age: "",
+    "Total Bilirubin": "",
+    "Direct Bilirubin": "",
+    "Alkaline Phosphotase": "",
+    "Alamine Aminotransferase": "",
+    "Aspartate Aminotransferase": "",
+    "Total Protiens": "",
+    Albumin: "",
+    "Albumin and Globulin Ratio": "",
+    "Gender(Male: 1, Female: 0)": "",
+  });
+  const [prediction, setPrediction] = useState(null);
+  const [formError, setFormError] = useState("");
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputData({ ...inputData, [name]: value });
+    setFormError("");
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Check if any field is empty
+    const isFormFilled = Object.values(inputData).every(
+      (value) => value.trim() !== ""
+    );
+    if (!isFormFilled) {
+      setFormError("Please fill out all fields.");
+      return;
+    }
+    try {
+      const response = await axios.post(`${BASE_URL}/liver`, {
+        data: inputData,
+      });
+      setPrediction(response.data.prediction);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   return (
     <div className="m-5 row mb-32">
       <div className="col-md-2"></div>
@@ -16,105 +52,47 @@ const LiverDiseaseTest = () => {
         </h1>
         <div className="card border border-black rounded-lg p-8">
           <form className="form-horizontal" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="Age"
-                  placeholder="Age"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="Total_Bilirubin"
-                  placeholder="Total Bilirubin"
-                />
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {Object.entries(inputData).map(([name, value]) => (
+                <div key={name} className="col-span-1">
+                  <input
+                    className="border border-black p-2 w-full"
+                    type="text"
+                    name={name}
+                    placeholder={`${name}`}
+                    value={value}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              ))}
+              {/* Form error message */}
+              {formError && (
+                <div className="text-red-500 mb-4">{formError}</div>
+              )}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="Direct_Bilirubin"
-                  placeholder="Direct Bilirubin"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="Alkaline_Phosphotase"
-                  placeholder="Alkaline Phosphotase"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="Alamine_Aminotransferase"
-                  placeholder="Alamine Aminotransferase"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="Aspartate_Aminotransferase"
-                  placeholder="Aspartate Aminotransferase"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="Total_Protiens"
-                  placeholder="Total Protiens"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="Albumin"
-                  placeholder="Albumin"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="Albumin_and_Globulin_Ratio"
-                  placeholder="Albumin and Globulin Ratio"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="Gender_Male"
-                  placeholder="Gender(Male: 1, Female: 0)"
-                />
-              </div>
-            </div>
+            {/* Submit button */}
             <input
               type="submit"
-              className="btn btn-info btn-block w-full text-[20px] mt-8 hover:cursor-pointer"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full mt-3"
               value="Predict"
             />
           </form>
+          {/* Prediction result */}
+          {prediction !== null && (
+            <div
+              className={`mt-3 ${
+                prediction.includes("[1]") ? "bg-red-400" : "bg-green-400"
+              } text-2xl`}
+            >
+              <h3 className="text-center">
+                {prediction.includes("[1]")
+                  ? "Sorry! Please consult your doctor."
+                  : "Great! You are HEALTHY."}
+              </h3>
+            </div>
+          )}
         </div>
       </div>
-      <div className="col-md-2"></div>
     </div>
   );
 };

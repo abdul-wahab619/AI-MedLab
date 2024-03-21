@@ -57,7 +57,7 @@ const KidneyDiseaseTest = () => {
       <div className="col-md-2"></div>
       <div className="col-md-8">
         <h1 className="text-center text-3xl font-bold mb-8">
-          Heart Disease Predictor
+          Kidney Disease Predictor
         </h1>
         <div className="card border border-black rounded-lg p-8">
           <form className="form-horizontal" onSubmit={handleSubmit}>
