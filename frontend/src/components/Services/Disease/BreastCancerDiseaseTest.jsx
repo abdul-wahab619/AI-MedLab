@@ -1,266 +1,116 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "../../../config";
+
 
 const BreastCancerPredictor = () => {
-  const handleSubmit = (event) => {
-    // Handle form submission here
-    event.preventDefault();
-    // Example: You can fetch data from form fields and perform actions like submitting to a backend endpoint
+  const [inputData, setInputData] = useState({
+    radius_mean: "",
+    texture_mean: "",
+    perimeter_mean: "",
+    area_mean: "",
+    smoothness_mean: "",
+    compactness_mean: "",
+    concavity_mean: "",
+    concave_points_mean: "",
+    symmetry_mean: "",
+    radius_se: "",
+    perimeter_se: "",
+    area_se: "",
+    compactness_se: "",
+    concavity_se: "",
+    concave_points_se: "",
+    fractal_dimension_se: "",
+    radius_worst: "",
+    texture_worst: "",
+    perimeter_worst: "",
+    area_worst: "",
+    smoothness_worst: "",
+    compactness_worst: "",
+    concavity_worst: "",
+    concave_points_worst: "",
+    symmetry_worst: "",
+    fractal_dimension_worst: "",
+  });
+  const [prediction, setPrediction] = useState(null);
+  const [formError, setFormError] = useState("");
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputData({ ...inputData, [name]: value });
+    setFormError("");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Check if any field is empty
+    const isFormFilled = Object.values(inputData).every(
+      (value) => value.trim() !== ""
+    );
+    if (!isFormFilled) {
+      setFormError("Please fill out all fields.");
+      return;
+    }
+    try {
+      const response = await axios.post(`${BASE_URL}/breast-cancer`, {
+        data: inputData,
+      });
+      setPrediction(response.data.prediction);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
-    <div className="m-5 row">
+    <div className="m-5 row mb-32">
       <div className="col-md-2"></div>
       <div className="col-md-8">
         <h1 className="text-center text-3xl font-bold mb-8">
-          Breast Cancer Predictor
+        BreastCancer Disease Predictor
         </h1>
         <div className="card border border-black rounded-lg p-8">
           <form className="form-horizontal" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="radius_mean"
-                  placeholder="radius_mean"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="texture_mean"
-                  placeholder="texture_mean"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="perimeter_mean"
-                  placeholder="perimeter_mean"
-                />
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {Object.entries(inputData).map(([name, value]) => (
+                <div key={name} className="col-span-1">
+                  <input
+                    className="border border-black p-2 w-full"
+                    type="text"
+                    name={name}
+                    placeholder={`${name}`}
+                    value={value}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              ))}
+              {/* Form error message */}
+              {formError && (
+                <div className="text-red-500 mb-4">{formError}</div>
+              )}
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="area_mean"
-                  placeholder="area_mean"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="smoothness_mean"
-                  placeholder="smoothness_mean"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="compactness_mean"
-                  placeholder="compactness_mean"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="concavity_mean"
-                  placeholder="concavity_mean"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="concave_points_mean"
-                  placeholder="concave_points_mean"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="symmetry_mean"
-                  placeholder="symmetry_mean"
-                />
-              </div>
-            </div>
-
-            {/* Repeat the above grid for other fields */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="radius_se"
-                  placeholder="radius_se"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="perimeter_se"
-                  placeholder="perimeter_se"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="area_se"
-                  placeholder="area_se"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="compactness_se"
-                  placeholder="compactness_se"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="concavity_se"
-                  placeholder="concavity_se"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="concave_points_se"
-                  placeholder="concave_points_se"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="fractal_dimension_se"
-                  placeholder="fractal_dimension_se"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="radius_worst"
-                  placeholder="radius_worst"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="texture_worst"
-                  placeholder="texture_worst"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="perimeter_worst"
-                  placeholder="perimeter_worst"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="area_worst"
-                  placeholder="area_worst"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="smoothness_worst"
-                  placeholder="smoothness_worst"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="compactness_worst"
-                  placeholder="compactness_worst"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="concavity_worst"
-                  placeholder="concavity_worst"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="concave_points_worst"
-                  placeholder="concave_points_worst"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="symmetry_worst"
-                  placeholder="symmetry_worst"
-                />
-              </div>
-              <div>
-                <input
-                  className="border border-black p-2 w-full"
-                  type="text"
-                  name="fractal_dimension_worst"
-                  placeholder="fractal_dimension_worst"
-                />
-              </div>
-            </div>
-
+            {/* Submit button */}
             <input
               type="submit"
-              className="btn btn-info btn-block w-full text-[20px] mt-8 hover:cursor-pointer"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full mt-3"
               value="Predict"
             />
           </form>
+          {/* Prediction result */}
+          {prediction !== null && (
+            <div
+              className={`mt-3 ${
+                prediction.includes("[1]") ? "bg-red-400" : "bg-green-400"
+              } text-2xl`}
+            >
+              <h3 className="text-center">
+                {prediction.includes("[1]")
+                  ? "Sorry! Please consult your doctor."
+                  : "Great! You are HEALTHY."}
+              </h3>
+            </div>
+          )}
         </div>
       </div>
-      <div className="col-md-2"></div>
     </div>
   );
 };
