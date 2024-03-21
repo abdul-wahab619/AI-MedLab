@@ -4,15 +4,19 @@ const router = express.Router();
 
 const diabetesModel = "D:\\AI-MedLab\\backend\\aimodels\\diabetes.pkl";
 const heartModel = "D:\\AI-MedLab\\backend\\aimodels\\heart.pkl";
+const kidneyModel = "D:\\AI-MedLab\\backend\\aimodels\\kidney.pkl";
 
-const pythonScriptPath = "D:\\AI-MedLab\\backend\\predict.py";
+
+const pythonScriptPathForDiabetes = "D:\\AI-MedLab\\backend\\predict.py";
 const pythonScriptPathForHeart = "D:\\AI-MedLab\\backend\\heart.py";
+const pythonScriptPathForKidney = "D:\\AI-MedLab\\backend\\kidney.py";
+
 
 router.post("/diabetes", (req, res) => {
   try {
     const data = req.body.data;
     const pythonProcess = spawn("python", [
-      pythonScriptPath,
+      pythonScriptPathForDiabetes,
       "--loads",
       diabetesModel,
       JSON.stringify(data),
@@ -58,6 +62,51 @@ router.post("/heart", (req, res) => {
     const data = req.body.data;
     const pythonProcess = spawn("python", [
       pythonScriptPathForHeart,
+      "--loads",
+      heartModel,
+      JSON.stringify(data),
+    ]);
+    let prediction = "";
+    let responseSent = false; // Flag to track if response has been sent
+
+    pythonProcess.stdout.on("data", (data) => {
+      console.log("Python script output:", data.toString());
+      prediction += data.toString();
+    });
+
+    pythonProcess.stderr.on("data", (data) => {
+      console.error("Python script error:", data.toString());
+    });
+
+    pythonProcess.on("close", (code) => {
+      console.log("Python process closed with code:", code);
+      console.log("Prediction:", prediction);
+      if (!responseSent) {
+        res.json({ prediction });
+        responseSent = true;
+      }
+    });
+
+    pythonProcess.on("error", (error) => {
+      console.error("Python process error:", error);
+      if (!responseSent) {
+        res.status(500).send("Internal Server Error");
+        responseSent = true;
+      }
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    if (!responseSent) {
+      res.status(500).send("Internal Server Error");
+      responseSent = true;
+    }
+  }
+});
+router.post("/kidney", (req, res) => {
+  try {
+    const data = req.body.data;
+    const pythonProcess = spawn("python", [
+      pythonScriptPathForKidney,
       "--loads",
       heartModel,
       JSON.stringify(data),
