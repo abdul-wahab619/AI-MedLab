@@ -1,15 +1,23 @@
-import React from "react";
-import DiabetesTest from "./DiabetesTest"; // Import the disease components
+import React, { useState } from "react";
+import DiabetesTest from "./DiabetesTest";
 import HeartDiseaseTest from "./HeartDiseaseTest";
 import KidneyDiseaseTest from "./KidneyDiseaseTest.jsx";
 import LiverDiseaseTest from "./LiverDiseaseTest.jsx";
 import BreastCancerDiseaseTest from "./BreastCancerDiseaseTest.jsx";
 import MalariaDiseaseTest from "./MalariaDiseaseTest.jsx";
 import PneumoniaDiseaseTest from "./PneumoniaDiseaseTest.jsx";
+import ResultComponent from "./ResultComponent";
 
 // Import components for other diseases...
 
 const DiseasePage = ({ service }) => {
+  const [prediction, setPrediction] = useState(null); // State to store the prediction
+
+  // Function to receive prediction from child components
+  const handlePrediction = (pred) => {
+    setPrediction(pred);
+  };
+
   console.log(service.id);
 
   // Render the appropriate disease component based on the URL parameter
@@ -25,9 +33,19 @@ const DiseasePage = ({ service }) => {
     case "5":
       return <BreastCancerDiseaseTest />;
     case "6":
-      return <MalariaDiseaseTest />;
+      return (
+        <>
+          <MalariaDiseaseTest onPrediction={handlePrediction} />
+          {prediction !== null && <ResultComponent prediction={prediction} />}
+        </>
+      );
     case "7":
-      return <PneumoniaDiseaseTest />;
+      return (
+        <>
+          <PneumoniaDiseaseTest onPrediction={handlePrediction} />
+          {prediction !== null && <ResultComponent prediction={prediction} />}
+        </>
+      );
     default:
       return <div>No such disease found</div>;
   }
