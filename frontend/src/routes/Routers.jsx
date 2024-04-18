@@ -12,8 +12,13 @@ import MyAccount from "../Dashboard/user-account/MyAccount";
 import Dashboard from "../Dashboard/doctor-account/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
 import CheckoutSuccess from "../pages/CheckoutSuccess";
-import { services } from "../assets/data/services.js"; // Import the services array
-import DiseasePage from "../components/Services/Disease/DiseasePage.jsx"; // Import DiseasePage component
+import { services } from "../assets/data/services.js";
+import DiseasePage from "../components/Services/Disease/DiseasePage.jsx";
+import AdminLayout from "../layout/Admin-Layout.jsx";
+import AdminUsers from "../pages/Admin-Users.jsx";
+import AdminDoctors from "../pages/Admin-Doctors.jsx";
+import AdminBookings from "../pages/Admin-Bookings.jsx";
+import AdminUpdate from "../layout/pages/Admin-Update.jsx";
 
 const Routers = () => {
   return (
@@ -43,6 +48,13 @@ const Routers = () => {
           </ProtectedRoute>
         }
       />
+      <Route path="/admin/*" element={<AdminLayout />}>
+        <Route path="/users" element={<AdminUsers />} />
+        <Route path="/doctors" element={<AdminDoctors />} />
+        <Route path="/bookings" element={<AdminBookings />} />
+        <Route path="/users/:id/edit" element={<AdminUpdate />} />
+      </Route>
+
       {/* Dynamically create routes for each disease */}
       {services.map((service) => (
         <Route
