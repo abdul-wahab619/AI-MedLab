@@ -13,8 +13,9 @@ function App() {
     console.log("Token:", token);
   }, [user, role, token]);
 
-  return <>{token && role === "admin" ? <Admin /> : <Layout />}</>;
+  return <>{token && role === "admin" ? <Admin /> : <Layout />}
+  </>;
 }
 
 export default App;
-//  return <>{token && role === "admin" ? <Admin /> : <Layout />}</>;
+//{token && role === "admin" ? <Admin /> : <Layout />}

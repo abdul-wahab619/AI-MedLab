@@ -1,51 +1,77 @@
-import React from "react";
-import { NavLink, Outlet, Route, Routes } from "react-router-dom";
+import React, { useContext } from "react";
+import { NavLink, Outlet, Routes, Route } from "react-router-dom";
 import { FaUser, FaHome } from "react-icons/fa";
 import { FaUserDoctor } from "react-icons/fa6";
 import { BsFillTicketDetailedFill } from "react-icons/bs";
+import AdminUsers from "../pages/Admin-Users";
+import AdminDoctors from "../pages/Admin-Doctors";
+import AdminBookings from "../pages/Admin-Bookings";
+import AdminUpdate from "./pages/Admin-Update";
+import { authContext } from "../context/AuthContext";
 
 const AdminLayout = () => {
-  {
-    console.log("adminLayout call");
-  }
+  const { user, dispatch } = useContext(authContext);
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+  };
+
   return (
     <>
-      <header className="m-5">
-        <div className="container">
-          <nav>
-            <ul className="flex flex-col p-5 justify-items-start">
-              <li>
-                <NavLink to="/admin/users">
-                  <FaUser />
-                  Users
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/admin/doctors">
-                  <FaUserDoctor />
-                  Doctors
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/admin/bookings">
-                  <BsFillTicketDetailedFill />
-                  Bookings
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/admin">
-                  <FaHome />
-                  Home
-                </NavLink>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-      <div className="container font-semibold size-8">
-        Abdul Wahab
+      <nav className="flex justify-between rounded-full m-5 bg-gray-200 items-center py-4 px-6">
+        <ul className="flex justify-around gap-44">
+          <li>
+            <NavLink to="/admin/users" className="flex items-center">
+              <FaUser className="mr-1" />
+              Users
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/admin/doctors" className="flex items-center">
+              <FaUserDoctor className="mr-1" />
+              Doctors
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/admin/bookings" className="flex items-center">
+              <BsFillTicketDetailedFill className="mr-1" />
+              Bookings
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/admin" className="flex items-center">
+              <FaHome className="mr-1" />
+              Home
+            </NavLink>
+          </li>
+        </ul>
+        <div>
+          {user ? (
+            <button
+              onClick={handleLogout}
+              type="button"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Login
+            </button>
+          )}
+        </div>{" "}
+      </nav>
+      <div className="container font-semibold text-xl">
         <Outlet />
       </div>
+      <Routes>
+        <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/doctors" element={<AdminDoctors />} />
+        <Route path="/admin/bookings" element={<AdminBookings />} />
+        <Route path="/admin/users/:id/edit" element={<AdminUpdate />} />
+      </Routes>
     </>
   );
 };

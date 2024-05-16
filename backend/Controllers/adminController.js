@@ -17,6 +17,26 @@ export const getAllUsers = async (req, res) => {
     });
   }
 };
+export const deleteUserById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    // Log received user ID
+    console.log("Received User ID:", id);
+
+    const deletedUser = await User.findByIdAndDelete(id); // Find and delete user by ID
+    if (!deletedUser) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    res
+      .status(200)
+      .json({ success: true, message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
 
 export const getAllDoctors = async (req, res) => {
   try {
