@@ -72,7 +72,7 @@ const AdminUsers = () => {
               key={index}
               className="border-2 border-gray-500 rounded-lg px-4 py-2 m-4 relative hover:shadow-xl"
             >
-              <div className="flex justify-between">
+              <div className="flex justify-between mb-2">
                 <BiEditAlt className="text-blue-500 cursor-pointer" />
                 <button>
                   <MdDelete className="cursor-pointer text-red-500" />

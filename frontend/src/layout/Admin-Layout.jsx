@@ -8,6 +8,7 @@ import AdminDoctors from "../pages/Admin-Doctors";
 import AdminBookings from "../pages/Admin-Bookings";
 import AdminUpdate from "./pages/Admin-Update";
 import { authContext } from "../context/AuthContext";
+import AdminHome from "../pages/Admin-Home";
 
 const AdminLayout = () => {
   const { user, dispatch } = useContext(authContext);
@@ -19,6 +20,12 @@ const AdminLayout = () => {
     <>
       <nav className="flex justify-between rounded-full m-5 bg-gray-200 items-center py-4 px-6">
         <ul className="flex justify-around gap-44">
+          <li>
+            <NavLink to="/home" className="flex items-center">
+              <FaHome className="mr-1" />
+              Home
+            </NavLink>
+          </li>
           <li>
             <NavLink to="/admin/users" className="flex items-center">
               <FaUser className="mr-1" />
@@ -35,12 +42,6 @@ const AdminLayout = () => {
             <NavLink to="/admin/bookings" className="flex items-center">
               <BsFillTicketDetailedFill className="mr-1" />
               Bookings
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/admin" className="flex items-center">
-              <FaHome className="mr-1" />
-              Home
             </NavLink>
           </li>
         </ul>
@@ -67,6 +68,7 @@ const AdminLayout = () => {
         <Outlet />
       </div>
       <Routes>
+        <Route path="/home" element={<AdminHome />} />
         <Route path="/admin/users" element={<AdminUsers />} />
         <Route path="/admin/doctors" element={<AdminDoctors />} />
         <Route path="/admin/bookings" element={<AdminBookings />} />
