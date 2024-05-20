@@ -82,7 +82,7 @@ const Footer = () => {
           <div>
             <img src={logo} alt="" />
             <p className="text-[16px] leading-7 font-[400] text-textColor mt-4">
-              Copyright &#169; {year} developed by Abdul Wahab all right reserved.
+              Copyright &#169; {year} developed by Abdul Wahab & Nafeesa Shehzadi all right reserved.
             </p>
             <div className="flex items-center gap-3 mt-4">
               {socialLinks.map((link, index) => (
