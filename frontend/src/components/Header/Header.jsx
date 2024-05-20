@@ -9,6 +9,10 @@ const navLinks = [
     display: "Home",
   },
   {
+  path: "/symptomchk",
+  display: "HealthPredict",
+},
+  {
     path: "/doctors",
     display: "find a Doctor",
   },
