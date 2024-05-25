@@ -25,7 +25,14 @@ const Routers = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/services" element={<Services />} />
+      <Route
+        path="/services"
+        element={
+          <ProtectedRoute allowedRoles={["patient", "doctor", "admin"]}>
+            <Services />
+          </ProtectedRoute>
+        }
+      /> 
       <Route path="/checkout-success" element={<CheckoutSuccess />} />
       <Route
         path="/users/profile/me"
