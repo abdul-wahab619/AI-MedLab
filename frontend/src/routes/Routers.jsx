@@ -2,6 +2,7 @@ import React from "react";
 import Home from "../pages/Home";
 import Services from "../pages/Services";
 import Signup from "../pages/Signup";
+import Symptomchk from "../pages/Symptomchk";
 import Login from "../pages/Login";
 import Contact from "../pages/Contact";
 import Doctors from "../pages/Doctors/Doctors";
@@ -18,12 +19,20 @@ const Routers = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
+      <Route path="/symptomchk" element={<Symptomchk />} />
       <Route path="/doctors" element={<Doctors />} />
       <Route path="/doctors/:id" element={<DoctorDetails />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/services" element={<Services />} />
+      <Route
+        path="/services"
+        element={
+          <ProtectedRoute allowedRoles={["patient", "doctor", "admin"]}>
+            <Services />
+          </ProtectedRoute>
+        }
+      /> 
       <Route path="/checkout-success" element={<CheckoutSuccess />} />
       <Route
         path="/users/profile/me"
