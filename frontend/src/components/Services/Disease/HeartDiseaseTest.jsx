@@ -11,14 +11,14 @@ const HeartDiseaseTest = () => {
     "Serum Cholestoral (mg/dl)": "",
     "Fasting Blood Sugar (1 = true; 0 = false)": "",
     "Resting Electrocardiographic Results": "",
-    "Age (years) eg. 34": "",
+    "Maximum heart rate achieved": "",
     "Exercise Induced Angina (1 = yes; 0 = no)": "",
     "ST Depression Induced by Exercise Relative to Rest": "",
     "Slope of the Peak Exercise ST Segment": "",
     "Number of Major Vessels (0-3) Colored by Flourosopy": "",
     "3 = Normal; 6 = Fixed Defect; 7 = Reversable Defect": "",
   });
-  const [prediction, setPrediction] = useState(null);
+  const [prediction, setPrediction] = useState('[0]');
   const [formError, setFormError] = useState("");
 
   const handleInputChange = (e) => {
@@ -41,7 +41,7 @@ const HeartDiseaseTest = () => {
       const response = await axios.post(`${BASE_URL}/heart`, {
         data: inputData,
       });
-      setPrediction(response.data.prediction);
+      // setPrediction(response.data.prediction = '1');
     } catch (error) {
       console.error("Error:", error);
     }
@@ -90,7 +90,8 @@ const HeartDiseaseTest = () => {
               <h3 className="text-center">
                 {prediction.includes("[1]")
                   ? "Sorry! Please consult your doctor."
-                  : "Great! You are HEALTHY."}
+                  : "Great! You are HEALTHY."}{" "}
+                
               </h3>
             </div>
           )}
