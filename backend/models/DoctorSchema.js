@@ -1,4 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+
+const Appointment = new Schema({
+  patientName: String,
+  patientGender: { type: String, enum: ["male", "female", "other"] },
+  payment: String,
+  price: String,
+  bookedOn: String,
+  testName: String,
+});
 
 const DoctorSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
@@ -38,7 +47,7 @@ const DoctorSchema = new mongoose.Schema({
     enum: ["pending", "approved", "cancelled"],
     default: "pending",
   },
-  appointments: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
+  appointments: [Appointment],
 });
 
 export default mongoose.model("Doctor", DoctorSchema);
