@@ -1,6 +1,7 @@
 import User from "../models/UserSchema.js";
 import Booking from "../models/BookingSchema.js";
 import Doctor from "../models/DoctorSchema.js";
+import mongoose from "mongoose";
 
 export const updateUser = async (req, res) => {
   const id = req.params.id;
@@ -119,16 +120,57 @@ export const getMyAppointments = async (req, res) => {
     const doctors = await Doctor.find({ _id: { $in: doctorIds } }).select(
       "-password"
     );
-
     res.status(200).json({
       success: true,
       message: "Appointments are getting",
-      data: doctorIds,
+      data: doctors,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
       message: "Someting went wrong, cannot get this",
+    });
+  }
+};
+
+export const createAppointment = async (req, res) => {
+  try {
+    const { doctorId, ...appointmentData } = req.body;
+    if (!doctorId) {
+      return res.status(400).json({
+        success: false,
+        message: "Doctor ID is required",
+      });
+    }
+
+    const doctor = await Doctor.findById(doctorId);
+    if (!doctor) {
+      return res.status(400).json({
+        success: false,
+        message: "This Doctor is not available now",
+      });
+    }
+    const appointment = {
+      patientName: appointmentData.patientName,
+      patientGender: appointmentData.patientGender,
+      payment: appointmentData.payment,
+      price: appointmentData.price,
+      bookedOn: appointmentData.bookedOn,
+      testName: appointmentData.testName,
+      testResult: appointmentData.testResult,
+    };
+    doctor.appointments.push(appointment);
+
+    await doctor.save();
+    return res.status(200).json({
+      success: true,
+      data: doctor,
+      message: "Appoint booking done",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
     });
   }
 };
