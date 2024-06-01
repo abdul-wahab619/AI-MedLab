@@ -6,6 +6,7 @@ import {
   getSingleUser,
   getUserProfile,
   getMyAppointments,
+  createAppointment,
 } from "../Controllers/userController.js";
 import { authenticate, restrict } from "../auth/verifyToken.js";
 
@@ -22,5 +23,11 @@ router.get(
   restrict(["patient"]),
   getMyAppointments
 ); // get myappointments
+router.post(
+  "/appointments/create-appointment",
+  // authenticate,
+  // restrict(["patient"]),
+  createAppointment
+); // create appointment
 
 export default router;
