@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/Logo1.png";
 import {
   AiFillYoutube,
   AiFillGithub,
@@ -9,19 +9,19 @@ import {
 } from "react-icons/ai";
 const socialLinks = [
   {
-    path: "https://www.youtube.com/mr-abdulwahab-aw",
+    path: "https://github.com/abdul-wahab619",
     icon: <AiFillGithub className="group-hover:text-white w-4 h-5" />,
   },
   {
-    path: "https://www.youtube.com/mr-abdulwahab-aw",
+    path: "https://www.youtube.com/@abdul-wahab-aw",
     icon: <AiFillYoutube className="group-hover:text-white w-4 h-5" />,
   },
   {
-    path: "https://www.youtube.com/mr-abdulwahab-aw",
+    path: "https://www.instagram.com/mr.abdulwahab.aw/",
     icon: <AiFillInstagram className="group-hover:text-white w-4 h-5" />,
   },
   {
-    path: "https://www.youtube.com/mr-abdulwahab-aw",
+    path: "https://www.linkedin.com/in/abdul-wahab-aw/",
     icon: <AiFillLinkedin className="group-hover:text-white w-4 h-5" />,
   },
 ];
@@ -80,9 +80,14 @@ const Footer = () => {
       <div className="container">
         <div className="flex justify-between flex-col md:flex-row flex-wrap gap-[30px]">
           <div>
-            <img src={logo} alt="" />
+            <img
+              className="w-28 h-20 object-fill overflow-hidden"
+              src={logo}
+              alt=""
+            />
             <p className="text-[16px] leading-7 font-[400] text-textColor mt-4">
-              Copyright &#169; {year} developed by Abdul Wahab & Nafeesa Shehzadi all right reserved.
+              Copyright &#169; {year} developed by Abdul Wahab & Nafeesa
+              Shehzadi all right reserved.
             </p>
             <div className="flex items-center gap-3 mt-4">
               {socialLinks.map((link, index) => (
@@ -150,7 +155,6 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-          
         </div>
       </div>
     </footer>

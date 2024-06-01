@@ -6,7 +6,7 @@ import User from "../models/UserSchema.js";
 export const authenticate = async (req, res, next) => {
   // Get token from headers
   const authToken = req.headers.authorization;
-  console.log("authToken", authToken);
+  // console.log("authToken", authToken);
 
   // Check if token exists
   if (!authToken || !authToken.startsWith("Bearer")) {
