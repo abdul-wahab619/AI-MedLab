@@ -1,27 +1,22 @@
 export const faqs = [
   {
-    question: "What is your medical care?",
+    question: "What is our Ai-MedLab?",
     content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+      "Our medical care encompasses a comprehensive healthcare platform designed to address critical aspects of patient well-being. We provide services for the diagnosis, treatment, and management of seven major diseases, aiming to enhance patients' quality of life through personalized treatment plans and ongoing support.",
   },
   {
     question: "What happens if I need to go a hospital?",
     content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+      "If you need to go to a hospital, our healthcare platform can assist you by providing relevant medical information and helping you understand your condition better. We can also support you in coordinating with the hospital staff and ensuring continuity of care throughout your hospital stay. Additionally, our platform may offer resources and guidance to help you navigate the hospital admission process smoothly.",
   },
   {
-    question: "What happens if I need to go a hospital?",
+    question: "How efficient our diseases models?",
     content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+      "Our disease models are highly efficient, leveraging advanced algorithms and data analytics to accurately diagnose, treat, and manage seven major diseases. Through continuous refinement and validation, we ensure the reliability and effectiveness of our models in providing timely and personalized care to patients.",
   },
   {
-    question: "Can I visit your medical office?",
+    question: "Can I consult with doctors?",
     content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
-  },
-  {
-    question: "Does you provide urgent care?",
-    content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+      "You can consult with qualified doctors through our platform, ensuring personalized advice and guidance on managing your health condition effectively.",
   },
 ];

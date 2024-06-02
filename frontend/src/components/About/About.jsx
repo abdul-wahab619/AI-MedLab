@@ -21,16 +21,20 @@ const About = () => {
             <div className="w-full lg:w-1/2 xl:w-[670px] order-1 lg:order-2">
               <h2 className="heading">Proud to be one of the nation best</h2>
               <p className="text__para">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Accusamus molestias corrupti a consequuntur? Quos sint ab,
-                ducimus odit placeat enim aperiam, at rem dolore, cum
-                praesentium. Consequuntur consectetur quisquam sequi.
+                Proud to be one of the nation's best, we excel in addressing
+                diverse healthcare challenges. Our comprehensive approach
+                effectively tackles issues from diagnosis to management,
+                ensuring patients receive exceptional care and support
+                throughout their treatment journey. By integrating advanced
+                medical practices with personalized care, we aim to improve
+                patient outcomes and quality of life.
               </p>
               <p className="text__para mt-[30px]">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Repudiandae, mollitia ut! Voluptatem amet architecto similique.
-                Unde cupiditate magni velit molestiae, nihil inventore dolores
-                voluptatum corrupti labore minima eaque soluta dolor.
+                By integrating advanced medical practices with personalized
+                care, we aim to improve patient outcomes and quality of life.
+                Our commitment to excellence drives us to continuously innovate
+                and provide solutions for even the most complex medical
+                conditions.
               </p>
               <Link to="/">
                 <button className="btn">Learn more</button>

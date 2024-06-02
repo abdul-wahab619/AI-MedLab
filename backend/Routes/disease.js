@@ -359,19 +359,4 @@ router.post("/predict-malaria", upload.single("image"), (req, res) => {
   }
 });
 
-// // Route for diabetes prediction
-// router.post("/diabetes", predictDiabetes);
-
-// // Route for cancer prediction
-// router.post("/cancer", predictCancer);
-
-// // Route for heart prediction
-// router.post("/heart", predictHeart);
-
-// // Route for kidney prediction
-// router.post("/kidney", predictKidney);
-
-// // Route for liver prediction
-// router.post("/liver", predictLiver);
-
 export default router;

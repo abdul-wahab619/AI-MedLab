@@ -10,6 +10,8 @@ import reviewRoute from "./Routes/review.js";
 import bookingRoute from "./Routes/booking.js";
 import diseaseRoute from "./Routes/disease.js";
 import adminRoute from "./Routes/admin.js";
+import contactRoute from "./Routes/contact.js";
+
 import healthRoute from "./Routes/healthPredict.js";
 
 dotenv.config();
@@ -50,6 +52,7 @@ app.use("/api/v1/reviews", reviewRoute);
 app.use("/api/v1/bookings", bookingRoute);
 app.use("/api/v1/", diseaseRoute);
 app.use("/api/v1/admin", adminRoute);
+app.use("/api/v1/", contactRoute);
 app.use("/api/v1/", healthRoute);
 
 app.listen(port, () => {

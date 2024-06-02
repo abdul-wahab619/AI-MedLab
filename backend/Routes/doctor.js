@@ -15,9 +15,7 @@ const router = express.Router();
 router.use("/:doctorId/reviews", reviewRouter);
 
 // Get doctor's profile
-// router.get("/profile/me", authenticate, restrict(["doctor"]), getDoctorProfile);
 router.get("/profile/me", authenticate, restrict(["doctor"]), (req, res) => {
-  // console.log("Received request to fetch doctor profile");
   getDoctorProfile(req, res); // Call the controller function
 });
 

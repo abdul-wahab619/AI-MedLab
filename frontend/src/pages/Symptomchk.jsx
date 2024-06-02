@@ -84,11 +84,10 @@ const Symptomchk = () => {
             </label>
             <input
               type="text"
-              className="p-3 rounded-2xl text-2xl font-semibold form-control"
+              className="p-3 rounded-2xl w-[60%] text-2xl font-semibold form-control"
               id="symptoms"
               name="symptoms"
               placeholder="type systems such as itching, sleeping, aching etc"
-              style={{ width: "50%" }}
               value={symptoms}
               onChange={(e) => setSymptoms(e.target.value)}
             />

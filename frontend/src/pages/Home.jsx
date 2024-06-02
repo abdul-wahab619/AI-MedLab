@@ -34,14 +34,15 @@ const Home = () => {
             {/* ========== Hero Content ========== */}
             <div>
               <div className="lg:w-[570px]">
-                <h1 className="text-[36px] leading-[46px] text-headingColor font-[800] md:text-[60px] md:leading-[70px]">
-                  We help patients live a healthy, longer life.
+                <h1 className="text-[36px] leading-[46px] text-headingColor font-[800] md:text-[45px] md:leading-[70px]">
+                  A Smart Solution for Better Healthcare: Helping patients live
+                  healthier, longer lives.
                 </h1>
                 <p className="text__para">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Tenetur deleniti earum corporis alias odit impedit est saepe
-                  ipsum tempora commodi magnam illo placeat minus, distinctio
-                  error cum voluptatem eaque fugit.
+                  We have developed a healthcare platform that supports the
+                  diagnosis, treatment, and management of seven major diseases,
+                  aiming to improve patient quality of life with accurate
+                  information, customized treatment plans, and ongoing support.
                 </p>
                 <button onClick={bookAppointment} className="btn">
                   Request an Appointment
