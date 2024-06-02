@@ -1,15 +1,18 @@
 import nodemailer from "nodemailer";
+import dotEnv from "dotenv";
 import express from "express";
 
 const router = express.Router();
+dotEnv.config();
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.ethereal.email",
+  service: "gmail",
+  host: "smtp.gmail.com",
   port: 587,
   secure: false, // Use `true` for port 465, `false` for all other ports
   auth: {
-    user: "reese.kling7@ethereal.email",
-    pass: "KmHgg2Kgg1aXS1CtWJ",
+    user: process.env.USER,
+    pass: process.env.APP_PASS,
   },
 });
 
@@ -20,8 +23,11 @@ router.post("/contact", async (req, res) => {
   try {
     // Send email using the transporter
     let info = await transporter.sendMail({
-      from: '"Abdul Wahab Main 👻" <abdulwahab@gmail.com>',
-      to: "awminhas619@gmail.com", 
+      from: {
+        name: "Abdul Wahab",
+        address: process.env.USER,
+      },
+      to: "awminhas619@gmail.com",
       subject: subject,
       text: `Email: ${email}\n\nMessage: ${message}`,
     });
