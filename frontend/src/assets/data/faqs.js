@@ -19,4 +19,9 @@ export const faqs = [
     content:
       "You can consult with qualified doctors through our platform, ensuring personalized advice and guidance on managing your health condition effectively.",
   },
+  {
+    question: "Does the facility offer telehealth or virtual appointments?",
+    content:
+      "Yes, our facility offers telehealth and virtual appointments, providing convenient access to medical professionals for personalized consultations and guidance on managing your health.",
+  },
 ];
