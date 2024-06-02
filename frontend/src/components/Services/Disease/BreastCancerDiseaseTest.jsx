@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../../config";
-
+import DcotorsDropDown from "../../DoctorDropDown/DoctorDropDown";
 
 const BreastCancerPredictor = () => {
   const [inputData, setInputData] = useState({
@@ -66,7 +66,7 @@ const BreastCancerPredictor = () => {
       <div className="col-md-2"></div>
       <div className="col-md-8">
         <h1 className="text-center text-3xl font-bold mb-8">
-        BreastCancer Disease Predictor
+          BreastCancer Disease Predictor
         </h1>
         <div className="card border border-black rounded-lg p-8">
           <form className="form-horizontal" onSubmit={handleSubmit}>
@@ -111,6 +111,10 @@ const BreastCancerPredictor = () => {
           )}
         </div>
       </div>
+      <DcotorsDropDown
+        testName={"Diabetes Disease Predictor"}
+        testResult={prediction?.includes("[1]") ? "Unhealthy" : "Healthy"}
+      />
     </div>
   );
 };

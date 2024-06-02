@@ -8,12 +8,8 @@ import MalariaDiseaseTest from "./MalariaDiseaseTest.jsx";
 import PneumoniaDiseaseTest from "./PneumoniaDiseaseTest.jsx";
 import ResultComponent from "./ResultComponent";
 
-// Import components for other diseases...
-
 const DiseasePage = ({ service }) => {
-  const [prediction, setPrediction] = useState(null); // State to store the prediction
-
-  // Function to receive prediction from child components
+  const [prediction, setPrediction] = useState(null);
   const handlePrediction = (pred) => {
     setPrediction(pred);
   };

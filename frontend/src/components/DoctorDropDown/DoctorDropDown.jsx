@@ -5,8 +5,9 @@ import Loader from "../../components/Loader/Loading";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-function DcotorsDropDown(testName, testResult = null) {
+function DoctorsDropDown({ testName, testResult = null }) {
   const loginUser = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token"); // Assuming you store your token in localStorage
   const [selectedDoctor, setSelectedDoctor] = useState("");
 
   const { data: doctors, loading, error } = useFetchData(`${BASE_URL}/doctors`);
@@ -27,10 +28,22 @@ function DcotorsDropDown(testName, testResult = null) {
       patientName: loginUser.name,
       bookedOn: `${new Date()}`,
     };
-    await axios.post(`${BASE_URL}/users/appointments/create-appointment`, {
-      ...payload,
-    });
-    toast.success("Appointment booking done");
+
+    try {
+      await axios.post(
+        `${BASE_URL}/users/appointments/create-appointment`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token in the headers
+          },
+        }
+      );
+      toast.success("Appointment booking done");
+    } catch (error) {
+      toast.error("Failed to book appointment");
+      console.error(error);
+    }
   };
 
   return (
@@ -38,14 +51,14 @@ function DcotorsDropDown(testName, testResult = null) {
       {loading && <Loader />}
       {error && <Error />}
 
-      <div class="center-container space-x-0.5">
-        <div class="flex justify-center mt-10  ">
+      <div className="center-container space-x-0.5">
+        <div className="flex justify-center mt-10">
           <h1>Select a Doctor: </h1>
-          <div class="select-container">
+          <div className="select-container">
             <select
               value={selectedDoctor}
               onChange={handleSelectChange}
-              class="border"
+              className="border"
             >
               <option value="" disabled>
                 Select a doctor
@@ -59,19 +72,19 @@ function DcotorsDropDown(testName, testResult = null) {
             {selectedDoctor && <p>Selected Doctor ID : {selectedDoctor}</p>}
           </div>
         </div>
-        <div class="button-container">
-          <div class="flex justify-center mt-10">
-            <button class="px-20 py-15">
+        <div className="button-container">
+          <div className="flex justify-center mt-10">
+            <button className="px-20 py-15">
               <a
                 href="/home"
-                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-20 rounded"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-20 rounded"
               >
                 Back to Home
               </a>
             </button>
             <button
               onClick={bookAppointment}
-              class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-20 rounded pr-8"
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-20 rounded pr-8"
             >
               Book Appointment
             </button>
@@ -82,4 +95,4 @@ function DcotorsDropDown(testName, testResult = null) {
   );
 }
 
-export default DcotorsDropDown;
+export default DoctorsDropDown;

@@ -16,8 +16,15 @@ import ServiceList from "../components/Services/ServiceList";
 import DoctorList from "../components/Doctors/DoctorList";
 import FaqList from "../components/Faq/FaqList";
 import Testimonial from "../components/Testimonial/Testimonial";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Home = () => {
+  const navigate = useNavigate(); // Get the navigate function from useNavigate
+  const bookAppointment = async () => {
+    toast.success("Find your Doctor");
+    navigate("/doctors"); // Redirect to the /doctors route
+  };
   return (
     <>
       {/* ========== Hero Section ========== */}
@@ -36,7 +43,9 @@ const Home = () => {
                   ipsum tempora commodi magnam illo placeat minus, distinctio
                   error cum voluptatem eaque fugit.
                 </p>
-                <button className="btn">Request an Appointment</button>
+                <button onClick={bookAppointment} className="btn">
+                  Request an Appointment
+                </button>
               </div>
               {/* ========== Hero Counter */}
               <div className="mt-[30px] lg:mt-[70px] flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-[30px]">

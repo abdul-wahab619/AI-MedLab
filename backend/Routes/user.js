@@ -25,8 +25,8 @@ router.get(
 ); // get myappointments
 router.post(
   "/appointments/create-appointment",
-  // authenticate,
-  // restrict(["patient"]),
+  authenticate,
+  restrict(["patient"]),
   createAppointment
 ); // create appointment
 

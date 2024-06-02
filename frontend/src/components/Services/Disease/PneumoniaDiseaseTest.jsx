@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../../config";
+import DcotorsDropDown from "../../DoctorDropDown/DoctorDropDown";
 
 const PneumoniaDiseaseTest = () => {
   const [imagePreview, setImagePreview] = useState("");
@@ -111,6 +112,10 @@ const PneumoniaDiseaseTest = () => {
           </div>
         )}
       </div>
+      <DcotorsDropDown
+        testName={"Diabetes Disease Predictor"}
+        testResult={prediction === 1 ? "Unhealthy" : "Healthy"}
+      />
     </div>
   );
 };

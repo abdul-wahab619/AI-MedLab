@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../../config";
+import DcotorsDropDown from "../../DoctorDropDown/DoctorDropDown";
+
 
 const HeartDiseaseTest = () => {
   const [inputData, setInputData] = useState({
@@ -18,7 +20,7 @@ const HeartDiseaseTest = () => {
     "Number of Major Vessels (0-3) Colored by Flourosopy": "",
     "3 = Normal; 6 = Fixed Defect; 7 = Reversable Defect": "",
   });
-  const [prediction, setPrediction] = useState('[0]');
+  const [prediction, setPrediction] = useState("[0]");
   const [formError, setFormError] = useState("");
 
   const handleInputChange = (e) => {
@@ -91,12 +93,15 @@ const HeartDiseaseTest = () => {
                 {prediction.includes("[1]")
                   ? "Sorry! Please consult your doctor."
                   : "Great! You are HEALTHY."}{" "}
-                
               </h3>
             </div>
           )}
         </div>
       </div>
+      <DcotorsDropDown
+        testName={"Diabetes Disease Predictor"}
+        testResult={prediction?.includes("[1]") ? "Unhealthy" : "Healthy"}
+      />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../../config";
+import DcotorsDropDown from "../../DoctorDropDown/DoctorDropDown";
 
 const DiabetesTest = () => {
   const [inputData, setInputData] = useState({
@@ -90,14 +91,15 @@ const DiabetesTest = () => {
           )}
         </div>
       </div>
+      <DcotorsDropDown
+        testName={"Diabetes Disease Predictor"}
+        testResult={prediction?.includes("[1]") ? "Unhealthy" : "Healthy"}
+      />
     </div>
   );
 };
 
 export default DiabetesTest;
-
-
-
 
 /*
 import React, { useState } from "react";
