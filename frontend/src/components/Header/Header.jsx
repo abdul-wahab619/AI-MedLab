@@ -1,17 +1,20 @@
+import "../../App.css";
 import React, { useEffect, useRef, useContext } from "react";
 import logo from "../../assets/images/Logo1.png";
 import { NavLink, Link } from "react-router-dom";
 import { BiMenu } from "react-icons/bi";
+import { AiOutlineClose } from "react-icons/ai";
 import { authContext } from "../../context/AuthContext.jsx";
+
 const navLinks = [
   {
     path: "/home",
     display: "Home",
   },
   {
-  path: "/symptomchk",
-  display: "HealthPredict",
-},
+    path: "/symptomchk",
+    display: "HealthPredict",
+  },
   {
     path: "/doctors",
     display: "find a Doctor",
@@ -25,6 +28,7 @@ const navLinks = [
     display: "Contact",
   },
 ];
+
 const Header = () => {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
@@ -42,22 +46,27 @@ const Header = () => {
       }
     });
   };
+
   useEffect(() => {
     handleStickyHeader();
     return () => window.removeEventListener("scroll", handleStickyHeader);
-  });
+  }, []);
 
   const toggleMenu = () => menuRef.current.classList.toggle("show__menu");
+
   return (
     <header className="header flex items-center" ref={headerRef}>
       <div className="container">
-        <div className="flex item-center justify-between">
+        <div className="flex items-center justify-between">
           {/* ===========Logo ==========*/}
           <div>
-            <img className="w-28 h-20 object-fill" src={logo} alt="" />
+            <img className="w-28 h-20 object-fill" src={logo} alt="Logo" />
           </div>
           {/* =========== Menu ==========*/}
-          <div className="navigation" ref={menuRef} onClick={toggleMenu}>
+          <div className="navigation" ref={menuRef}>
+            <div className="close-menu-icon md:hidden" onClick={toggleMenu}>
+              <AiOutlineClose className="w-8 h-8 cursor-pointer text-black text-2xl absolute top-4 right-4" />
+            </div>
             <ul className="menu flex items-center gap-[2.7rem]">
               {navLinks.map((link, index) => (
                 <li key={index}>
@@ -65,9 +74,10 @@ const Header = () => {
                     to={link.path}
                     className={(navClass) =>
                       navClass.isActive
-                        ? "text-primaryColor text- [16px] leading-7 font-[600]"
+                        ? "text-primaryColor text-[16px] leading-7 font-[600]"
                         : "text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor"
                     }
+                    onClick={toggleMenu}
                   >
                     {link.display}
                   </NavLink>
@@ -90,7 +100,7 @@ const Header = () => {
                   <figure className="w-[35px] h-[35px] rounded-full cursor-pointer">
                     <img
                       src={user?.photo}
-                      alt=""
+                      alt="User"
                       className="w-full rounded-full"
                     />
                   </figure>

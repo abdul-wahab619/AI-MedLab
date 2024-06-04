@@ -20,7 +20,6 @@ const Login = () => {
   };
 
   const submitHandler = async (event) => {
-    // console.log(formData);
     event.preventDefault();
     setLoading(true);
 
@@ -85,7 +84,7 @@ const Login = () => {
               required
             />
           </div>
-
+          
           <div className="mt-7">
             <button
               type="submit"
