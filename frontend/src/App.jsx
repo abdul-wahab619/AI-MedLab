@@ -6,7 +6,11 @@ import { authContext } from "./context/AuthContext";
 function App() {
   const { user, role, token } = useContext(authContext);
 
-  useEffect(() => {}, [user, role, token]);
+  useEffect(() => {
+    console.log("User: ", user);
+    console.log("role: ", role);
+    console.log("token: ", token);
+  }, [user, role, token]);
 
   return <>{token && role === "admin" ? <Admin /> : <Layout />}</>;
 }

@@ -14,6 +14,9 @@ import ProtectedRoute from "./ProtectedRoute";
 import CheckoutSuccess from "../pages/CheckoutSuccess";
 import { services } from "../assets/data/services.js";
 import DiseasePage from "../components/Services/Disease/DiseasePage.jsx";
+import ForgotPassword from "../pages/ForgotPassword.jsx";
+import ResetPassword from "../pages/ResetPassword.jsx";
+
 const Routers = () => {
   return (
     <Routes>
@@ -25,6 +28,10 @@ const Routers = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
+
+
       <Route
         path="/services"
         element={
@@ -32,7 +39,7 @@ const Routers = () => {
             <Services />
           </ProtectedRoute>
         }
-      /> 
+      />
       <Route path="/checkout-success" element={<CheckoutSuccess />} />
       <Route
         path="/users/profile/me"
