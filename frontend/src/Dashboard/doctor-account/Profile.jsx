@@ -262,6 +262,7 @@ const Profile = ({ doctorData }) => {
                 placeholder="100"
                 name="ticketPrice"
                 value={formData.ticketPrice}
+                onChange={handleInputChange}
                 className="form__input"
               />
             </div>

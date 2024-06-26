@@ -1,54 +1,48 @@
 import React from "react";
-import { formateDate } from "../../utils/formatDate";
+import { formateDate } from "../../utils/formatDate.js";
 
 const Appointments = ({ appointments }) => {
+  console.log("appointments: ", appointments);
   return (
-    <table className="w-full text-left text-sm text-gray-500">
-      <thead className="text-xs text-gray-700 uppercase bg-gray-100">
-        <tr>
-          <th scope="col" className="px-6 py-6">
-            Name
-          </th>
-          <th scope="col" className="px-6 py-6">
-            Gender
-          </th>
-          <th scope="col" className="px-6 py-6">
-            Payment
-          </th>
-          <th scope="col" className="px-6 py-6">
-            Price
-          </th>
-          <th scope="col" className="px-6 py-6">
-            Booked on
-          </th>
-          <th scope="col" className="px-6 py-6">
-            Test name
-          </th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {appointments?.map((item) => (
-          <tr key={item._id}>
-            <th
-              scope="row"
-              className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap"
-            >
-              <div className="pl-3">
-                <div className="text-base font-semibold">
-                  {item.patientName}
-                </div>
-              </div>
-            </th>
-            <td className="px-6 py-4">{item.patientGender}</td>{" "}
-            <td className="px-6 py-4">{item.payment}</td>
-            <td className="px-6 py-4">{item.price}</td>
-            <td className="px-6 py-4">{formateDate(item.bookedOn)}</td>
-            <td className="px-6 py-4">{item.testName}</td>
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-max bg-white border-gray-300 border rounded-md">
+        <thead>
+          <tr className="bg-gray-100 text-gray-600 text-xs leading-4 uppercase">
+            <th className="py-3 px-6 text-left">Name</th>
+            <th className="py-3 px-6 text-left">Gender</th>
+            <th className="py-3 px-6 text-left">Payment</th>
+            <th className="py-3 px-6 text-left">Price</th>
+            <th className="py-3 px-6 text-left">Booked on</th>
+            <th className="py-3 px-6 text-left">Test name</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody className="text-gray-600 text-sm font-light">
+          {appointments?.map((item) => (
+            <tr
+              key={item._id}
+              className="border-b border-gray-200 hover:bg-gray-100"
+            >
+              <td className="py-3 px-6 text-left whitespace-nowrap">
+                <div className="flex items-center">
+                  <div className="mr-2">
+                    <div className="text-sm font-semibold">
+                      {item.user.name}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td className="py-3 px-6 text-left">{item.user.gender}</td>
+              <td className="py-3 px-6 text-left">{item.status}</td>
+              <td className="py-3 px-6 text-left">{item.ticketPrice}</td>
+              <td className="py-3 px-6 text-left">
+                {formateDate(item.updatedAt)}
+              </td>
+              <td className="py-3 px-6 text-left">{item.testName ||'Pneumonia'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

@@ -53,7 +53,7 @@ const PneumoniaDiseaseTest = () => {
   };
 
   return (
-    <div className="m-10 flex justify-center items-center h-screen w-screen">
+    <div className="m-5 flex flex-col justify-center items-center h-screen w-screen">
       <div className="w-full md:w-1/2 lg:w-1/2">
         <form
           className="bg-white shadow-lg shadow-gray-500 rounded px-8 pt-6 pb-8 mb-4"
@@ -112,10 +112,12 @@ const PneumoniaDiseaseTest = () => {
           </div>
         )}
       </div>
-      <DcotorsDropDown
-        testName={"Diabetes Disease Predictor"}
-        testResult={prediction === 1 ? "Unhealthy" : "Healthy"}
-      />
+      <div>
+        <DcotorsDropDown
+          testName={"Diabetes Disease Predictor"}
+          testResult={prediction === 1 ? "Unhealthy" : "Healthy"}
+        />
+      </div>
     </div>
   );
 };

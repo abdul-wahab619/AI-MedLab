@@ -17,6 +17,7 @@ export const getAllUsers = async (req, res) => {
     });
   }
 };
+
 export const deleteUserById = async (req, res) => {
   try {
     const id = req.params.id;
@@ -24,6 +25,26 @@ export const deleteUserById = async (req, res) => {
     console.log("Received User ID:", id);
 
     const deletedUser = await User.findByIdAndDelete(id); // Find and delete user by ID
+    if (!deletedUser) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    res
+      .status(200)
+      .json({ success: true, message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+export const deleteDoctorById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    // Log received user ID
+    console.log("Received User ID:", id);
+
+    const deletedUser = await Doctor.findByIdAndDelete(id); // Find and delete user by ID
     if (!deletedUser) {
       return res
         .status(404)
@@ -68,5 +89,30 @@ export const getAllBookings = async (req, res) => {
       success: false,
       message: "No Bookings Found",
     });
+  }
+};
+
+export const updateDoctorApprovalStatus = async (req, res) => {
+  const { id } = req.params;
+  const { isApproved } = req.body;
+
+  if (!["pending", "approved", "cancelled"].includes(isApproved)) {
+    return res.status(400).json({ message: "Invalid approval status" });
+  }
+
+  try {
+    const doctor = await Doctor.findById(id);
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+
+    doctor.isApproved = isApproved;
+    await doctor.save();
+
+    res
+      .status(200)
+      .json({ message: "Approval status updated successfully", doctor });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
   }
 };

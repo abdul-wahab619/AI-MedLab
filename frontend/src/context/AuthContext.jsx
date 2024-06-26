@@ -1,9 +1,20 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 
+const parseJSON = (value) => {
+  try {
+    return JSON.parse(value);
+  } catch (e) {
+    return null;
+  }
+};
+
+const getUserFromLocalStorage = () => {
+  const user = localStorage.getItem("user");
+  return user ? parseJSON(user) : null;
+};
+
 const initialState = {
-  user: localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : null,
+  user: getUserFromLocalStorage(),
   role: localStorage.getItem("role") || null,
   token: localStorage.getItem("token") || null,
 };

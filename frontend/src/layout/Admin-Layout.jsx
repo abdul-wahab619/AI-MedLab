@@ -9,6 +9,8 @@ import AdminBookings from "../pages/Admin-Bookings";
 import AdminUpdate from "./pages/Admin-Update";
 import { authContext } from "../context/AuthContext";
 import AdminHome from "../pages/Admin-Home";
+import DeleteUser from "../pages/DeleteUser";
+import DeleteDoctor from "../pages/DeleteDoctor";
 
 const AdminLayout = () => {
   const { user, dispatch } = useContext(authContext);
@@ -73,6 +75,8 @@ const AdminLayout = () => {
         <Route path="/admin/doctors" element={<AdminDoctors />} />
         <Route path="/admin/bookings" element={<AdminBookings />} />
         <Route path="/admin/users/:id/edit" element={<AdminUpdate />} />
+        <Route path="/delete/user/:id" element={<DeleteUser />} />
+        <Route path="/delete/doctor/:id" element={<DeleteDoctor />} />
       </Routes>
     </>
   );
